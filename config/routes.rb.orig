@@ -1,0 +1,11 @@
+NokiaApp::Application.routes.draw do
+<<<<<<< HEAD
+  get "feed/index"
+  match 'session/:action', :to => 'sessions'
+  root :to => "static_pages#home"
+=======
+  get "static_pages/home", :controller => 'static_pages', :action => 'home'
+>>>>>>> 8dcb91135f0e372b26e6129c567998de25ef0bf9
+
+  get "static_pages/infobubble", :controller => 'static_pages', :action => 'infobubble'
+end

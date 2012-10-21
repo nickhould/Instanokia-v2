@@ -1,0 +1,117 @@
+
+nokia.Settings.set( "appId", "B6bk7hCkcVLMBDNJ2FWb"); 
+nokia.Settings.set( "authenticationToken", "B6bk7hCkcVLMBDNJ2FWb");
+
+// Get the DOM node to which we will append the map
+var mapContainer = document.getElementById("mapContainer");
+
+// We create a new instance of InfoBubbles bound to a variable so we can call it later on
+var infoBubbles = new nokia.maps.map.component.InfoBubbles(),
+	marker;
+
+// Create a map inside the map container DOM node
+var map = new nokia.maps.map.Display(mapContainer, {
+	// Initial center and zoom level of the map
+	center: [52.51, 13.4],
+	zoomLevel: 10,
+	components: [
+		infoBubbles, 
+		// We add the behavior component to allow panning / zooming of the map
+		new nokia.maps.map.component.Behavior(), 
+		// ZoomBar provides a UI to zoom the map in & out
+		new nokia.maps.map.component.ZoomBar()
+	]
+});
+
+/* We create a UI notecontainer for example description and controls
+ * NoteContainer is a UI helper function and not part of the Nokia Maps API
+ * See exampleHelpers.js for implementation details 
+ */
+var noteContainer = new NoteContainer({
+	id: "infoBubblesUi",
+	parent: document.getElementById("uiContainer"),
+	title: "InfoBubbles",
+	content:
+		'<p>This example shows how to add InfoBubbles, and to add rich html content to it.</p>' +
+		'<p>Click on buttons for adding specific bubbles to the map center.</p>' +
+		'<input id="bubble" type="button" value="InfoBubble"/>' +
+		'<input id="htmlBubble" type="button" value="InfoBubble with html content"/>'
+});
+
+/* We create a new UI Loggger to display log messages
+ * Logger is a UI helper function and not part of the Nokia Maps API
+ * See exampleHelpers.js for implementation details 
+ */
+var infoBubblesLogger = new Logger({
+	id: "mapObjectsEventsLogger",
+	parent: document.getElementById("uiContainer"),
+	title: "InfoBubbles handlers log"
+});
+
+// Binding of DOM elements to several variables so we can install event handlers.
+var bubbleUiElt = document.getElementById("bubble"),
+	htmlBubbleUiElt = document.getElementById("htmlBubble"),
+
+	/* We create an infobubble using infoBubbles.openBubble.
+	 * 
+	 * openBubble(content, coordinate, onUserClose, hideCloseButton) takes for parameters 
+	 * 		- content: to be shown in the info bubble;
+	 * 		 	it can be an HTML string or an instance of nokia.maps.search.Location
+	 * 		- coordinate: An object containing the geographic coordinates 
+	 * 			of the location, where the bubble's anchor is to be placed
+	 * 		- onUserClose: A callback method which is called when bubble is closed
+	 * 		- hideCloseButton: Hides close button if set to true.
+	 */
+	bubble = infoBubbles.openBubble("InfoBubble", map.center, function () {
+		infoBubblesLogger.log("A bubble was " + this.getState());
+	});
+
+map.objects.add(marker = new nokia.maps.map.StandardMarker(map.center));
+
+// Create an InfoBubble with html content
+bubbleUiElt.onclick = function () {
+	var bubbleElt = infoBubbles.openBubble("InfoBubble", map.center, function () {
+		infoBubblesLogger.log("A bubble was " + this.getState());
+	});
+	
+	// Remove previous marker of the map
+	map.objects.remove(marker);
+	
+	// We create a new marker on the map at its center and add to the map objects collection so it will be rendered
+	map.objects.add(marker = new nokia.maps.map.StandardMarker(map.center));
+
+	/* Display's update() can be used to force an immediate re-render of the current view 
+	 * instead of the default delayed one, make this call here to make the rendering of the marker instantly.
+	 */
+	map.update(-1);
+};
+
+// Create an InfoBubble with HTML content
+htmlBubbleUiElt.onclick = function () {
+	var bubble,
+		htmlStr = '<div>' +
+		'<h2>InfoBubble with HTML content</h2>' +
+		'<img width=120 height=90 src=' +
+		'"http://upload.wikimedia.org/wikipedia/commons/' +
+		'thumb/7/7f/Bodemuseum.jpg/120px-Bodemuseum.jpg" ' +
+		'alt=""/><br/><b>Museum Island, Berlin</b>' +
+		'<p><a href="' +
+		'http://en.wikipedia.org/wiki/Museum_Island" target="_blank">' +
+		'Check out info and photos on Wikipedia</a></p></div>';
+	
+	// Remove previous marker of the map
+	map.objects.remove(marker);
+	
+	// We create a infoBubble at the center of the map with given HTML String
+	bubble = infoBubbles.openBubble(htmlStr, map.center, function () {
+		infoBubblesLogger.log("A bubble with HTML content was " + this.getState());
+	});
+	
+	// Create a new marker on the map at its center and add to the map objects collection so it will be rendered
+	map.objects.add(marker = new nokia.maps.map.StandardMarker(map.center));
+
+	/* Display's update() can be used to force an immediate re-render of the current view 
+	 * instead of the default delayed one, make this call here to make the rendering of the marker instantly.
+	 */
+	map.update(-1);
+};

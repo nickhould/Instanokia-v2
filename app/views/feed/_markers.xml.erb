@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+ 
+<markers>
+<% i = 0 %>
+<% if !@recent_media_items.nil? %>
+<%   @recent_media_items["data"].each do |media| %>
+	<marker>
+		<name><%= i +=1 %></name>
+		<address>ADDRESS <%= i %></address>
+		<lat><%= media.location.latitude %></lat>
+		<lng><%= media.location.longitude %><lng>
+	</marker>
+<% 	end %>
+</markers>

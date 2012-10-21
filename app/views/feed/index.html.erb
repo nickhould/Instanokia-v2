@@ -1,0 +1,16 @@
+
+<h1>Instanokia</h1>
+
+
+<%= form_tag("/index", :method => "get",:remote => true, :id => "index_search") do %>
+  <%= label_tag(:location, "Search for:") %>
+  <%= text_field_tag(:location) %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+
+<div id ='geoLocation'></div>
+
+<%= link_to "Sign out", controller: "sessions", action: "logout" %>
+
+<div id="map-center"></div>
+

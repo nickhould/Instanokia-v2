@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Nokia Maps API example - Multiple markers created from XML data</title>
+</head>
+<body onload="init();">
+<p style="text-align: center;">- Nokia MAPS API EXAMPLE -</p>
+<p style="text-align: center;">READ DATA OF MULTIPLE MARKERS FROM XML FILE AND PUT THE MARKERS ON THE MAP</p>
+<center>
+<div id="map" style="width:600px; height:400px; position: relative"></div>
+</center>
+<p>
+<script type="text/javascript" src="http://api.maps.nokia.com/2.2.1/jsl.js" charset="utf-8">
+</script>
+<script  type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</p>
+<p>&nbsp;</p>
+
+<script  type="text/javascript" > 
+/////////////////////////////////////////////////////////////////////////////////////
+// Don't forget to set your API credentials
+//
+// Replace with your appId and token which you can obtain when you 
+// register on http://api.developer.nokia.com/ 
+//
+			nokia.Settings.set( "appId", "YOUR APP ID GOES HERE"); 
+			nokia.Settings.set( "authenticationToken", "YOUR AUTHENTICATION TOKEN GOES HERE");
+//			
+/////////////////////////////////////////////////////////////////////////////////////	
+var markerCoords;
+var mapContainer;
+var container;
+var myMap;
+var bubbles=new Array();
+ 
+// When the HTML page body section is loaded this function will be called.
+// This function gets passed the marker XML data file name
+function placeMarkersOnMaps(filename) 
+{
+var counter = 0;
+$.ajax({
+    type: "GET",
+    url: filename ,
+    dataType: "xml",
+    success: parseXml,
+              error : err
+  });
+
+}
+function err (){
+		alert("An Error has occurred.");
+}
+
+function parseXml(xml)
+{
+	
+	var container = new nokia.maps.map.Container();
+	$(xml).find("marker").each(function(){
+	
+			//Read the name, address, latitude and longitude for each Marker
+			var nme = $(this).find('name').text();
+			var address = $(this).find('address').text();
+			var lat = $(this).find('lat').text();
+			var lng = $(this).find('lng').text();
+			
+			//Put each marker on the map as the data has been read.
+			
+			var markerCoords = new nokia.maps.geo.Coordinate(parseFloat(lat), parseFloat(lng));    
+			
+			var marker = new nokia.maps.map.StandardMarker(markerCoords, {text:nme});
+			container.objects.add(marker);      
+ 
+		});
+		// Add the marker container .
+		map.objects.add(container);
+		// Zoom into the markers.
+ 
+alert("Markers have been loaded. Hit OK to zoom the map into the area covering the markers.");
+ 
+map.zoomTo(container.getBoundingBox(), false);
+
+}
+
+ 
+function init(){
+ 
+// Here we create an Nokia Maps within a Container.
+ 
+mapContainer = document.getElementById("map");
+ 
+myInfoBubbles = new nokia.maps.map.component.InfoBubbles();
+ 
+myMap = nokia.maps.map,     
+                map = new myMap.Display(mapContainer, {
+                    center: [52.59, 13.3], zoomLevel: 10,
+                    components: [ new myMap.component.Behavior(),
+                                  new nokia.maps.map.component.ZoomBar(),
+                                  new nokia.maps.map.component.Overview(),                             
+                                  new nokia.maps.map.component.TypeSelector(),     
+                                  new nokia.maps.map.component.ScaleBar(),
+                  myInfoBubbles ]
+                });
+ 
+
+ 
+
+ 
+// Define the XML filename to read that contains the marker data
+placeMarkersOnMaps('markers'); 
+}
+</script>
+</body>
+</html>
