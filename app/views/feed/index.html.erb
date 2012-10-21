@@ -1,16 +1,124 @@
+<div class="container">
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar">
+			<div class="navbar-inner">
+			    <a class="brand active" href="#home">CitySnap</a>
+			    <ul class="nav">
+			      <li><a href="#theidea">The Idea</a></li>
+			      <li><a href="#theinstructions">The Instructions</a></li>
+			      <li><a href="#theteam">The Team</a></li>		      
+			    </ul>
+			</div>
+		</div>
+	</div>
+	<div class="row" id="home">
+		<div class="span12">
+			<h1>CitySnap</h1>
+		</div>
+	</div>
+	<br>
+	
+<!-- Search -->
+	<div class="row">
+		<div class="input-append span7 offset4">
+		  	
+		  	<!-- <input id="appendedInputButton" size="16" type="text"><button class="btn" type="button">Go!</button> -->
+			<!-- 	<input type="text" placeholder="Type something…">
+			<br>
+			<button type="submit" class="btn" style="text-align: center;">Submit</button>	 -->
 
-<h1>Instanokia</h1>
+			<%= form_tag("/index", :method => "get",:remote => true, :id => "index_search") do %>
+			  <%= text_field_tag(:location) %>
+			  <%= submit_tag "   Explore   ", :name => nil, class: "btn btn-info" %>
+			<% end %>
+		</div>
+	</div>
+
+<!-- Map -->
+	<div class="row">
+		<div class="span9" id="map">
+			<div id="map-center"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span10 offset1" id ='geoLocation'></div>
+	</div>
+	<br>
+	<br>
+
+<!-- THE IDEA -->
+	<div class="row">
+		<div class="span12" id="theidea">
+			<h1>The Idea</h1>
+			<br>
+			<br>
+			<span style="font-size: 18px;">
+				<p>InstaNokia was born from pizza, coffee, Red Bull, Mexican food, and a lot of patience during the Nokia Hackathon at the Illinois Institute of Technology.</p>
+			</span>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+
+<!-- THE TEAM -->
+	<div class="row">
+		<div class="span12" id="theteam">
+			<h1>The Team</h1>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
 
 
-<%= form_tag("/index", :method => "get",:remote => true, :id => "index_search") do %>
-  <%= label_tag(:location, "Search for:") %>
-  <%= text_field_tag(:location) %>
-  <%= submit_tag "Search", :name => nil %>
-<% end %>
-
-<div id ='geoLocation'></div>
-
-<%= link_to "Sign out", controller: "sessions", action: "logout" %>
-
-<div id="map-center"></div>
+	<div class="row">
+		<div class="span6">
+			<div class="span2">
+				<img src="https://twimg0-a.akamaihd.net/profile_images/2476685982/eightbit-b9f05c06-8ffb-43a5-9e84-fca17740c25f_reasonably_small.png" class="img-circle" height="128" width="128">
+			</div>
+			<div class="span3 well">
+				<p><b>Joe Villanueva</b></p>
+				<p>HTML5 CSS3 jQuery UX Rails</p>
+				<p>Send Joe a shoutout on Twitter at <a href="http://www.twitter.com/joevillanueva22" target="blank">@joevillanueva22</a>, or check his Github account out <a href="https://github.com/joevillanueva" target="blank">here.</a></p>
+			</div>		
+		</div>
+		<div class="span6">
+			<div class="span2">
+				<img src="https://twimg0-a.akamaihd.net/profile_images/1255273126/skyav_reasonably_small.png" class="img-circle" height="128" width="128">
+			</div>
+			<div class="span3 well">
+				<p><b>Mike Chau</b></p>
+				<p>Javascript Rails</p>
+				<p>Send Mike a shoutout on Twitter at <a href="http://www.twitter.com/money_mikec" target="blank">@money_mikec</a>, or check his Github account out <a href="https://github.com/mikechau" target="blank">here.</a></p>
+			</div>		
+		</div>
+	</div>
+	<br>
+	<br>	
+	<div class="row">
+		<div class="span6">
+			<div class="span2">
+				<img src="https://twimg0-a.akamaihd.net/profile_images/1843194066/selfshot_reasonably_small.jpg" class="img-circle" height="128" width="128">
+			</div>
+			<div class="span3 well">
+				<p><b>Bernard Chan</b></p>
+				<p>Rails<p>
+				<p>Send Bernard a shoutout on Twitter at <a href="http://www.twitter.com/bernard_chan99" target="blank">@bernard_chan99</a>, or check his Github account out <a href="https://github.com/bchan419" target="blank">here.</a></p>
+			</div>		
+		</div>
+		<div class="span6">
+			<div class="span2">
+				<img src="https://twimg0-a.akamaihd.net/profile_images/2718589957/fc0ff8457f90ad69caca7365a67e381b.jpeg" class="img-circle" height="128" width="128">
+			</div>
+			<div class="span3 well">
+				<p><b>Nick Hould</b></p>
+				<p>Rails</p>
+				<p>Send Nick a shoutout on Twitter at <a href="http://www.twitter.com/nicholashould" target="blank">@nicholashould</a>, or check his Github account out <a href="https://github.com/nickhould" target="blank">here.</a></p>
+			</div>		
+		</div>
+	</div>
+</div>	
 
